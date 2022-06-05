@@ -1,28 +1,32 @@
-for ((i=0;i<10;i++))
+size=10
+for(( i=0; i<size; i++))
 do
-	num[$i]=$((RANDOM%900+100))
+    array[i]=$(( RANDOM % 900 + 100 ))
+done
+echo "The 10 random three digit numbers are: "
+echo "${array[@]}"
+
+for(( i = 0; i < size - 1; i++ ))
+do
+    swapped=0
+    for(( j = 0; j < size-i-1  ; j++))
+    do
+        if((array[j] > array[j+1]))
+        then
+            temp=${array[j]}
+            array[j]=${array[j+1]}
+            array[j+1]=$temp
+            swapped=1
+        fi
+    done
+    if((swapped==0))
+    then
+        break
+    fi
 done
 
-echo "Before sorting an array: ${num[@]}"
+echo "The sorted array is: "
+echo "${array[@]}"
 
-for (( i=0;i<$((${#num[@]}-1));i++ ))
-do
-	for (( j=$(($i+1));j<${#num[@]};j++ ))
-	do
-		if [[ ${num[i]} -gt ${num[j]} ]]
-		then
-			temp=${num[i]}
-			num[$i]=${num[j]}
-			num[$j]=$temp
-		fi
-	done
-done
-echo "After sorting an array : ${num[@]}"
-
-secondLargest=${num[8]}
-secondSmallest=${num[1]}
-
-echo "2nd Largest number : $secondLargest"
-echo "2nd Smallest number : $secondSmallest"
-
-
+echo "The second largest element is ${array[-2]}"
+echo "The second smallest element is ${array[1]}"

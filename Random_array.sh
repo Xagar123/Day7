@@ -1,16 +1,16 @@
-echo "lower limit:"
-read X
-echo "upper limit:"
-read Y
-RANGE=$((Y-X+1))
-RANDOM=$$
+read -p "enter the lower limit" lower
+read -p "enter the upper limit" upper
 
-MAXCOUNT=10
-count=1
-
-while [ "$count" -le $MAXCOUNT ]; do
- number[$count]=$(($(($RANDOM%$RANGE))+X))
- let "count += 1"
+index=0
+for((i=lower;i<=upper;))
+do
+if((i%11==0))
+then
+array[index++]=$i
+((i+=11))
+else
+((i++))
+fi
 done
-echo "${number[@]}"
-© 2022 GitHub, Inc.
+echo "the require numbers are"
+echo "${array[@]}"
